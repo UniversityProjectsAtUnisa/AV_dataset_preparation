@@ -1,5 +1,6 @@
 Important files:
 
 align_labels.py
+split_labels_by_class.py
 create_dataset_split.py
 create_balanced_datasets.py
