@@ -58,7 +58,7 @@ def main():
     for f in keys:
         ordered_labels.append(labels[f])
 
-    with open(args.ogt_path, "w") as csv_file:
+    with open(args.ogt_path, "w", newline='') as csv_file:
         writer = csv.writer(csv_file)
         writer.writerows(ordered_labels)
 
