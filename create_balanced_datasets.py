@@ -17,7 +17,7 @@ def validate_b_ratio(b_ratio):
     splitted = b_ratio.split(":")
     if not any([s == "1" for s in splitted]):
         raise ValueError("b_ratio must contain at least one 1")
-    return int(splitted[0])/int(splitted[1])
+    return float(splitted[0])/float(splitted[1])
 
 
 def delete_stepped_array(arr, amount):
