@@ -46,7 +46,7 @@ def main():
     parser.add_argument("--dataset_path", type=str, default=path.join(OUTPUT_DIR, "balanced_ds.h5"),
                         help="h5 File that will contain the balanced dataset")
     parser.add_argument("--b_ratio", type=str, default="1:1",
-                        help="Balance ratio common/rare class. Ex: 1:2 1:1 5:1")
+                        help="Balance ratio common:rare class. Ex: 1:2 1:1 5:1")
     parser.add_argument("--seed", type=int, default=1,
                         help="Seed value")
     args = parser.parse_args()
