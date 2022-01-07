@@ -22,11 +22,12 @@ def validate_b_ratio(b_ratio):
 def delete_stepped_array(arr, amount):
     step_size = len(arr) / amount
 
-    i = len(arr)
-    while i > 0:
-        randomized_index = round(i) - random.randint(0, math.floor(step_size-1))
+    i = len(arr)-1
+    while i >= 0:
+        randomized_index = round(
+            i) - random.randint(0, min(math.floor(step_size-1), math.floor(i)))
         arr = np.delete(arr, randomized_index)
-        i-=step_size
+        i -= step_size
 
     return arr
 

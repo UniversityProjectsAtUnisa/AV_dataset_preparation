@@ -159,6 +159,6 @@ utkface
 
 # processed labels
 *labels.csv
-labels.json
+*labels.json
 # but not the original one
 !labels.csv
