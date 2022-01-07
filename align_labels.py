@@ -24,13 +24,19 @@ def cmp_images(a, b):
     return 0
 
 
-def main():
+def init_args():
     parser = argparse.ArgumentParser(description="Order labels")
     parser.add_argument("--igt_path", type=str, default="labels.csv",
                         help="CSV File with unordered GroundTruth")
     parser.add_argument("--ogt_path", type=str, default="ordered_labels.csv",
                         help="CSV File that will contain the ordered GroundTruth")
     args = parser.parse_args()
+
+    return args
+
+
+def main():
+    args = init_args()
 
     labels = {}
     with open(args.igt_path) as csv_file:
