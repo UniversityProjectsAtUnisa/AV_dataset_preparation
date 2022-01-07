@@ -12,7 +12,8 @@ import random
 import math
 
 import argparse
-import csv
+from os import path
+from config import OUTPUT_DIR, TEMP_DIR
 
 
 def remove_datasets(f, *datasets):
@@ -33,15 +34,15 @@ def pop_stepped(l, percentage):
 
 
 def init_args():
-    default_separate_igt_path = "labels.json"
-    default_single_igt_path = "joined_labels.json"
-    default_separate_dataset_path = "ds.h5"
-    default_joined_dataset_path = "test_ds.h5"
+    default_separate_igt_path = path.join(TEMP_DIR, "labels.json")
+    default_single_igt_path = path.join(TEMP_DIR, "joined_labels.json")
+    default_separate_dataset_path = path.join(TEMP_DIR, "ds.h5")
+    default_joined_dataset_path = path.join(OUTPUT_DIR, "test_ds.h5")
     parser = argparse.ArgumentParser(
         description="Create dataset file splitting data in train, test and possibly validation set")
     parser.add_argument("--igt_path", type=str, default=default_separate_igt_path,
                         help="JSON File with GroundTruth indexed by class")
-    parser.add_argument("--ogt_path", type=str, default="train_labels.csv",
+    parser.add_argument("--ogt_path", type=str, default=path.join(TEMP_DIR, "train_labels.csv"),
                         help="Output CSV File where labels are saved if --joined_ds is given as input")
     parser.add_argument("--dataset_path", type=str, default=default_separate_dataset_path,
                         help="h5 File that will contain the dataset")
@@ -72,6 +73,12 @@ def main():
     random.seed(args.seed)
     np.random.seed(args.seed)
     im_folder = args.im_path
+
+    if not path.isfile(args.igt_path):
+        raise Exception(f"igt_path {args.igt_path} not found")
+
+    if not path.isdir(im_folder):
+        raise Exception(f"im_folder {im_folder} not found")
 
     print("Reading whole data")
     train_names = {}

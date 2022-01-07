@@ -1,4 +1,5 @@
-import utils
+from os import path
+from config import OUTPUT_DIR, TEMP_DIR
 import h5py
 from split_labels_by_class import LABEL_NAMES
 import numpy as np
@@ -40,9 +41,9 @@ def shuffle_rowwise(arr):
 
 def main():
     parser = argparse.ArgumentParser(description="Balance train datasets")
-    parser.add_argument("--ids_path", type=str, default="ds.h5",
+    parser.add_argument("--ids_path", type=str, default=path.join(TEMP_DIR, "ds.h5"),
                         help="h5 file with dataset")
-    parser.add_argument("--dataset_path", type=str, default="balanced_ds.h5",
+    parser.add_argument("--dataset_path", type=str, default=path.join(OUTPUT_DIR, "balanced_ds.h5"),
                         help="h5 File that will contain the balanced dataset")
     parser.add_argument("--b_ratio", type=str, default="1:1",
                         help="Balance ratio common/rare class. Ex: 1:2 1:1 5:1")
@@ -51,6 +52,9 @@ def main():
     args = parser.parse_args()
     random.seed(args.seed)
     np.random.seed(args.seed)
+
+    if not path.isfile(args.ids_path):
+        raise Exception(f"ids_path {args.ids_path} not found")
 
     print("Validating balance ratio")
     b_ratio = validate_b_ratio(args.b_ratio)

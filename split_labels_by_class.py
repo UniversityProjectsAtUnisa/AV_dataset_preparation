@@ -2,15 +2,17 @@ import csv
 from collections import defaultdict
 import json
 import argparse
+from os import path
+from config import TEMP_DIR
 
 LABEL_NAMES = ["beard", "moustache", "glasses"]
 
 
 def init_args():
-    default_separate_ogt_path = "labels.json"
-    default_joined_ogt_path = "joined_labels.json"
-    default_separate_igt_path = "train_labels.csv"
-    default_joined_igt_path = "ordered_labels.csv"
+    default_separate_ogt_path = path.join(TEMP_DIR, "labels.json")
+    default_joined_ogt_path = path.join(TEMP_DIR, "joined_labels.json")
+    default_separate_igt_path = path.join(TEMP_DIR, "train_labels.csv")
+    default_joined_igt_path = path.join(TEMP_DIR, "ordered_labels.csv")
     parser = argparse.ArgumentParser(description="Index labels by class")
     parser.add_argument("--igt_path", type=str, default=default_separate_igt_path,
                         help="CSV File with ordered GroundTruth")
@@ -33,6 +35,9 @@ def init_args():
 
 def main():
     args = init_args()
+
+    if not path.isfile(args.igt_path):
+        raise Exception(f"igt_path {args.igt_path} not found")
 
     labels = defaultdict(list)
     with open(args.igt_path) as csv_file:

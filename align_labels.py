@@ -1,6 +1,8 @@
 import csv
 import functools
 import argparse
+from os import path
+from config import TEMP_DIR, INPUT_DIR
 
 NUMBER_OF_GROUPS = 25
 
@@ -26,9 +28,9 @@ def cmp_images(a, b):
 
 def init_args():
     parser = argparse.ArgumentParser(description="Order labels")
-    parser.add_argument("--igt_path", type=str, default="labels.csv",
+    parser.add_argument("--igt_path", type=str, default=path.join(INPUT_DIR, "labels.csv"),
                         help="CSV File with unordered GroundTruth")
-    parser.add_argument("--ogt_path", type=str, default="ordered_labels.csv",
+    parser.add_argument("--ogt_path", type=str, default=path.join(TEMP_DIR, "ordered_labels.csv"),
                         help="CSV File that will contain the ordered GroundTruth")
     args = parser.parse_args()
 
@@ -37,6 +39,9 @@ def init_args():
 
 def main():
     args = init_args()
+
+    if not path.isfile(args.igt_path):
+        raise Exception(f"igt_path {args.igt_path} not found")
 
     labels = {}
     with open(args.igt_path) as csv_file:
