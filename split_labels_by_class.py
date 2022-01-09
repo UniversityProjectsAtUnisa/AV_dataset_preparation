@@ -4,6 +4,8 @@ import json
 import argparse
 from os import path
 from config import TEMP_DIR
+import functools
+from align_labels import cmp_images
 
 LABEL_NAMES = ["beard", "moustache", "glasses"]
 
@@ -55,6 +57,7 @@ def main():
     if args.separate_ds:
         labels["no-moustache"] = list(set(labels["no-moustache"]
                                           ) - set(labels["beard"]))
+        labels["no-moustache"].sort(key=functools.cmp_to_key(cmp_images))
 
     with open(args.ogt_path, "w") as f:
         json.dump(labels, f)

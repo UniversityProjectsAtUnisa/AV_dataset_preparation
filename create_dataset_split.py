@@ -42,7 +42,7 @@ def init_args():
         description="Create dataset file splitting data in train, test and possibly validation set")
     parser.add_argument("--igt_path", type=str, default=default_separate_igt_path,
                         help="JSON File with GroundTruth indexed by class")
-    parser.add_argument("--ogt_path", type=str, default=path.join(TEMP_DIR, "train_labels.csv"),
+    parser.add_argument("--ogt_path", type=str, default=path.join(TEMP_DIR, "unordered_train_labels.csv"),
                         help="Output CSV File where labels are saved if --joined_ds is given as input")
     parser.add_argument("--dataset_path", type=str, default=default_separate_dataset_path,
                         help="h5 File that will contain the dataset")
