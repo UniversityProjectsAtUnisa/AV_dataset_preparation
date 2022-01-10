@@ -1,6 +1,10 @@
-Important files:
+# Data organization
 
-align_labels.py
-split_labels_by_class.py
-create_dataset_split.py
-create_balanced_datasets.py
+## Prerequisites
+
+- Image set in project root as a directory named "utkface"
+- To have installed opencv-python
+
+## How to run
+
+Execute the run.sh script

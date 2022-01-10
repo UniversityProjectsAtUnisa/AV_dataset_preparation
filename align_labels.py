@@ -8,6 +8,15 @@ NUMBER_OF_GROUPS = 25
 
 
 def cmp_images(a, b):
+    """Old style comparator that compares image names by chunks
+
+    Args:
+        a (str): first image name
+        b (str): second image name
+
+    Returns:
+        int: -1 if a comes first, 0 if they are equal, 1 otherwise
+    """
     a_pieces = a.split("_")
     b_pieces = b.split("_")
 
@@ -27,6 +36,11 @@ def cmp_images(a, b):
 
 
 def init_args():
+    """Utility function to initialize argparse args
+
+    Returns:
+        Args: args object from parser.parse_args()
+    """
     parser = argparse.ArgumentParser(description="Order labels")
     parser.add_argument("--igt_path", type=str, default=path.join(INPUT_DIR, "labels.csv"),
                         help="CSV File with unordered GroundTruth")
@@ -38,6 +52,10 @@ def init_args():
 
 
 def main():
+    """Reads CSV file located in args.igt_path, 
+    sorts its lines with cmp_images and 
+    outputs the sorted line in another CSV file located in args.ogt_path
+    """
     args = init_args()
 
     if not path.isfile(args.igt_path):

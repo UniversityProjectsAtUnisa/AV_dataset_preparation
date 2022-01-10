@@ -16,13 +16,17 @@ from os import path
 from config import OUTPUT_DIR, TEMP_DIR
 
 
-def remove_datasets(f, *datasets):
-    for dt in datasets:
-        if dt in f:
-            del f[dt]
-
-
 def pop_stepped(l, percentage):
+    """Removes a percentage of elements from a list distributing
+    the removal equally throughout the whole list
+
+    Args:
+        l (list): the input list
+        percentage (float): the percentage of elements to remove
+
+    Returns:
+        list: list of removed elements 
+    """
     step_size = math.ceil(1/percentage)
 
     p = []
@@ -34,6 +38,11 @@ def pop_stepped(l, percentage):
 
 
 def init_args():
+    """Utility function to initialize argparse args
+
+    Returns:
+        Args: args object from parser.parse_args()
+    """
     default_separate_igt_path = path.join(TEMP_DIR, "labels.json")
     default_single_igt_path = path.join(TEMP_DIR, "joined_labels.json")
     default_separate_dataset_path = path.join(TEMP_DIR, "ds.h5")
@@ -69,6 +78,11 @@ def init_args():
 
 
 def main():
+    """Creates a dataset containing and unbalanced train set, a validation set and a test set
+    for each label.
+    Starts from a JSON file located in args.igt_path and produces its outputs in args.dataset_path.
+    If args.joined_ds is given also generates another CSV file located in args.dataset_path
+    """
     args = init_args()
     random.seed(args.seed)
     np.random.seed(args.seed)

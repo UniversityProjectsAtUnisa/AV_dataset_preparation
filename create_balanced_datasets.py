@@ -10,6 +10,17 @@ from tqdm import tqdm
 
 
 def validate_b_ratio(b_ratio):
+    """Validates balance ratio b_ratio and returns it parsed.
+    b_ratio should look like "a:b" and at least one of a and b
+    must be equal to 1.
+
+
+    Args:
+        b_ratio (str): the balance ratio to validate
+
+    Returns:
+        float: the parsed balance ratio
+    """
     if not isinstance(b_ratio, str):
         raise TypeError("b_ratio must be of type string")
     if ":" not in b_ratio:
@@ -21,6 +32,16 @@ def validate_b_ratio(b_ratio):
 
 
 def delete_stepped_array(arr, amount):
+    """Deletes a fixed amount of elements from an np.array distributing
+    the deletion equally throughout the whole array
+
+    Args:
+        arr (ndarray): the input array
+        amount (int): the amount of elements to delete
+
+    Returns:
+        ndarray: the array without the removed elements
+    """
     step_size = len(arr) / amount
 
     i = len(arr)-1
@@ -34,12 +55,25 @@ def delete_stepped_array(arr, amount):
 
 
 def shuffle_rowwise(arr):
+    """randomly shuffles rows of a matrix
+
+    Args:
+        arr (ndarray): the matrix
+
+    Returns:
+        ndarray: the matrix after its rows have been shuffled
+    """
     for i in range(len(arr)):
         np.random.shuffle(arr[i])
     return arr
 
 
-def main():
+def init_args():
+    """Utility function to initialize argparse args
+
+    Returns:
+        Args: args object from parser.parse_args()
+    """
     parser = argparse.ArgumentParser(description="Balance train datasets")
     parser.add_argument("--ids_path", type=str, default=path.join(TEMP_DIR, "ds.h5"),
                         help="h5 file with dataset")
@@ -49,7 +83,16 @@ def main():
                         help="Balance ratio common:rare class. Ex: 1:2 1:1 5:1")
     parser.add_argument("--seed", type=int, default=1,
                         help="Seed value")
-    args = parser.parse_args()
+    return parser.parse_args()
+
+
+def main():
+    """Starting from a dataset located in args.ids_path generates and outputs a dataset in args.dataset_path.
+    The input dataset contains one unbalanced train set, one test set and one validation set for each label.
+    The output dataset will contain the same test and validation set, but several balanced trainset obtained
+    processing the original unbalanced train set.
+    """
+    args = init_args()
     random.seed(args.seed)
     np.random.seed(args.seed)
 
