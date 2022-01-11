@@ -18,7 +18,7 @@ from config import OUTPUT_DIR, TEMP_DIR
 
 def pop_stepped(l, percentage):
     """Removes a percentage of elements from a list distributing
-    the removal equally throughout the whole list
+    the removal equally throughout the list
 
     Args:
         l (list): the input list
@@ -81,7 +81,9 @@ def main():
     """Creates a dataset containing and unbalanced train set, a validation set and a test set
     for each label.
     Starts from a JSON file located in args.igt_path and produces its outputs in args.dataset_path.
-    If args.joined_ds is given also generates another CSV file located in args.dataset_path
+    If args.joined_ds is given generates a dataset containing only the test set, and the validation set.
+    It then outputs all the unused images in another CSV file located in args.ogt_path
+    If args.val_sr is not given it does not generate a validation set.
     """
     args = init_args()
     random.seed(args.seed)

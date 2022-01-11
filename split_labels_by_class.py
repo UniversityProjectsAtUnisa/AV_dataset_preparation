@@ -11,6 +11,11 @@ LABEL_NAMES = ["beard", "moustache", "glasses"]
 
 
 def init_args():
+    """Utility function to initialize argparse args
+
+    Returns:
+        Args: args object from parser.parse_args()
+    """
     default_separate_ogt_path = path.join(TEMP_DIR, "labels.json")
     default_joined_ogt_path = path.join(TEMP_DIR, "joined_labels.json")
     default_separate_igt_path = path.join(TEMP_DIR, "train_labels.csv")
@@ -36,6 +41,13 @@ def init_args():
 
 
 def main():
+    """Reads CSV file located in args.igt_path
+    If args.joined_ds is given, indexes it's labels by classes
+    and outputs it's result as a dictionary in a JSON File located in args.ogt_path.
+    If args.separate_ds is given, indexes it's labels n times where n is the amount
+    of single classes (eg: first class 0, first class 1, second class 0, ...).
+    In fact, every image is used n times (one for each class).
+    """
     args = init_args()
 
     if not path.isfile(args.igt_path):

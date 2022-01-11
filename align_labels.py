@@ -53,8 +53,8 @@ def init_args():
 
 def main():
     """Reads CSV file located in args.igt_path, 
-    sorts its lines with cmp_images and 
-    outputs the sorted line in another CSV file located in args.ogt_path
+    sorts its lines with cmp_images and outputs 
+    those lines in another CSV file located in args.ogt_path
     """
     args = init_args()
 
